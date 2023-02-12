@@ -1,9 +1,9 @@
-import {Component, OnInit, Input} from '@angular/core';
-import {MatDialogRef} from '@angular/material/dialog'; // close the dialog on success
-import {FetchApiDataService} from "../fetch-api-data.service"; // import API calls
-import {MatSnackBar} from "@angular/material/snack-bar"; // display notifications back to the user
+import { Component, OnInit, Input } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog'; // close the dialog on success
+import { FetchApiDataService } from "../fetch-api-data.service"; // import API calls
+import { MatSnackBar } from "@angular/material/snack-bar"; // display notifications back to the user
 
-import {MatCardActions} from "@angular/material/card";
+import { MatCardActions } from "@angular/material/card";
 
 @Component({
   selector: 'app-user-login-form',
@@ -19,19 +19,22 @@ export class UserLoginFormComponent implements OnInit {
     public dialogRef: MatDialogRef<UserLoginFormComponent>,
     public snackBar: MatSnackBar,
     public MatCardActions: MatCardActions,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
   }
 
   loginUser(): void {
-    this.fetchApiData.userRegistration(this.userData).subscribe((result) => {
+    this.fetchApiData.userLogin(this.userData).subscribe((result: ILoggedInUser) => {
+      console.log(result);
+      localStorage.setItem('user', result.user.Username);
+      localStorage.setItem('token', result.token);
       this.dialogRef.close();
-      this.snackBar.open(result, 'OK', {
+      this.snackBar.open(result.user.Username, 'OK', {
         duration: 2000
       });
     }, (result) => {
-      this.snackBar.open(result, 'OK', {
+      this.snackBar.open(result, 'Login Error', {
         duration: 2000
       });
     });
