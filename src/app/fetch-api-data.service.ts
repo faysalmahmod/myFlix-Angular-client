@@ -111,9 +111,9 @@ export class FetchApiDataService {
   // @param name
   // @returns JSON object holding user data
 
-  updateUser(name: string): Observable<any> {
+  updateUser(userData: IUser): Observable<any> {
     return this.http
-      .put<IUser>(apiURL + `users/${name}`, { headers: this.getHttpHeaders() })
+      .put<IUser>(apiURL + `users/${userData.Username}`, { headers: this.getHttpHeaders() })
       .pipe(
         map((res: IUser) => res || {}),
         catchError(this.handleError)
