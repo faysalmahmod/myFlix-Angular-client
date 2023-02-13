@@ -14,7 +14,7 @@ import { UserService } from "../user.service";
 export class MovieCardComponent
   implements OnInit {
   movies: IMovie[] = [];
-  favoriteMovies: string[] = [];
+  favoriteMovie: string[] = [];
   user: IUser = { Username: '', Email: '', Birthday: '', Password: '', favoriteMovie: [] };
   constructor(public fetchApiDataService: FetchApiDataService, public userService: UserService, public dialog: MatDialog,) { }
 
@@ -41,7 +41,7 @@ export class MovieCardComponent
     this.fetchApiDataService
       .loadUser(userName)
       .subscribe((response: IUser) => {
-        this.favoriteMovies = response.favoriteMovie || [];
+        this.favoriteMovie = response.favoriteMovie || [];
         this.user = response;
       })
   }
@@ -86,13 +86,13 @@ export class MovieCardComponent
  * @returns boolean
  */
   isFav(_id: string): boolean {
-    return this.favoriteMovies.includes(_id);
+    return this.favoriteMovie.includes(_id);
   }
 
   // deselects movie as favorite movie
-  deselectAsFavoriteMovie(name: string, title: string): void {
+  deselectAsFavoriteMovie(Username: string, title: string): void {
     this.fetchApiDataService.deleteFavoriteMovies(
-      name,
+      Username,
       title
     ).subscribe((result) => {
       this.ngOnInit();
@@ -100,9 +100,9 @@ export class MovieCardComponent
   }
 
   // deselects movie as favorite movie
-  selectAsFavoriteMovie(name: string, title: string): void {
+  selectAsFavoriteMovie(Username: string, title: string): void {
 
-    this.fetchApiDataService.addFavoriteMovies(name, title).subscribe((result) => {
+    this.fetchApiDataService.addFavoriteMovies(Username, title).subscribe((result) => {
       this.getUser()
     })
   }

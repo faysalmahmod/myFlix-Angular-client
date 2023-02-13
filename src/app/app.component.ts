@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import {UserService} from "./user.service";
-import { MovieCardComponent } from './movie-card/movie-card.component';
 
 
 @Component({

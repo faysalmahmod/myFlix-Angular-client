@@ -29,13 +29,6 @@ import { MovieDetailDialogComponent } from './movie-detail/movie-detail-dialog.c
 import { NavbarComponent } from './navbar/navbar.component';
 
 
-const appRoutes: Routes =[
-  { path: 'welcome', component: WelcomePageComponent},
-  { path: 'movies', component: MovieCardComponent},
-  { path: 'profile', component: ProfileComponent },
-  { path: '', redirectTo: 'welcome', pathMatch: 'prefix'},
-];
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,7 +44,6 @@ const appRoutes: Routes =[
     NavbarComponent
   ],
   imports: [
-    RouterModule.forRoot(appRoutes),
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

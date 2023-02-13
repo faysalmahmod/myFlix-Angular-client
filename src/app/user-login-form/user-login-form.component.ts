@@ -4,6 +4,7 @@ import { FetchApiDataService } from "../fetch-api-data.service"; // import API c
 import { MatSnackBar } from "@angular/material/snack-bar"; // display notifications back to the user
 import { Router } from '@angular/router';
 import { MatCardActions } from "@angular/material/card";
+import { UserService } from "../user.service";
 
 @Component({
   selector: 'app-user-login',
@@ -26,15 +27,12 @@ export class UserLoginFormComponent implements OnInit {
   }
 
   loginUser(): void {
-    this.fetchApiData.userLogin(this.userData).subscribe((result: ILoggedInUser) => {
-      this.router.navigate(['movies']);
+    this.fetchApiData.userLogin(this.userData).subscribe(
+      (result) => {
       console.log(result);
       localStorage.setItem('user', result.user.Username);
       localStorage.setItem('token', result.token);
       this.dialogRef.close();
-      this.snackBar.open(result.user.Username, 'OK', {
-        duration: 2000
-      });
       this.router.navigate(['movies']);
     }, (result) => {
       this.snackBar.open(result, 'Login Error', {

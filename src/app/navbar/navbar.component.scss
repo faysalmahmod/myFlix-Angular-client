@@ -1,7 +1,7 @@
 .mat-toolbar{
-  background-color: $background-color-dark;
+  background-color: #1F2833;
   color: white;
-  box-shadow: 0 0 10px $white;
+  box-shadow: 0 0 10px white;
   margin-bottom: 10px;
 
 }
@@ -10,8 +10,8 @@
 }
 
 .mat-button:hover, .mat-button:focus{
-  color: $emphasis;
-  background: $background-color-light;
+  color: red;
+  background: white;
   transition: 0.5s;
   border-radius: 5px;
 }

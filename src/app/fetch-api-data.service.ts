@@ -12,7 +12,7 @@ const apiURL = 'https://moviesapi1.herokuapp.com/';
 
 export class FetchApiDataService {
   // This will provide HttpClient to the entire class, making it available via this.http
-  apiURL = 'https://moviesapi1.herokuapp.com/';
+  // apiURL = 'https://moviesapi1.herokuapp.com/';
 
   constructor(private http: HttpClient) {
   }
@@ -20,10 +20,10 @@ export class FetchApiDataService {
   // make API call for the user registration endpoint
   // @param userDetails
   // @returns new user object in JSON
-  public userRegistration(userDetails: any): Observable<any> {
-    console.log(userDetails);
+  public userRegistration(user: IUser): Observable<any> {
+    console.log(user);
     return this.http
-      .post(apiURL + 'users', userDetails)
+      .post(apiURL + 'users', user)
       .pipe(
         catchError(this.handleError)
       );
@@ -32,10 +32,10 @@ export class FetchApiDataService {
   // make API call for login of existing user
   // @param userDetails
   // @returns data of user in JSON
-  public userLogin(userDetails: any): Observable<any> {
-    console.log(userDetails);
+  public userLogin(user: IUserLogin): Observable<any> {
+    console.log(user);
     return this.http
-      .post(apiURL + 'login', userDetails)
+      .post(apiURL + 'login', user)
       .pipe(
         catchError(this.handleError)
       );
@@ -46,8 +46,11 @@ export class FetchApiDataService {
   // @returns array of all movie objects in JSON
 
   loadAllMovies(): Observable<any> {
+    const token = localStorage.getItem('token');
     return this.http
-      .get<IMovie[]>(apiURL + 'movies', { headers: this.getHttpHeaders() })
+      .get<IMovie[]>(apiURL + 'movies', { headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token,
+      })})
       .pipe(
         map((res: IMovie[]) => res || []),
         catchError(this.handleError)
@@ -59,8 +62,11 @@ export class FetchApiDataService {
   // @returns JSON object holding movie data
 
   getSingleMovie(title: string): Observable<any> {
+    const token = localStorage.getItem('token');
     return this.http
-      .get<IMovie>(apiURL + `movies/${title}`, { headers: this.getHttpHeaders() })
+      .get<IMovie>(apiURL + `movies/${title}`, { headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token,
+      })})
       .pipe(
         map((res: IMovie) => res || {}),
         catchError(this.handleError)
@@ -73,8 +79,11 @@ export class FetchApiDataService {
   // @returns JSON object holding director data
 
   getDirector(name: string): Observable<any> {
+    const token = localStorage.getItem('token');
     return this.http
-      .get<IDirector>(apiURL + `movies/director/${name}`, { headers: this.getHttpHeaders() })
+      .get<IDirector>(apiURL + `movies/director/${name}`, { headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token,
+      })})
       .pipe(
         map((res: IDirector) => res || {}),
         catchError(this.handleError)
@@ -86,8 +95,11 @@ export class FetchApiDataService {
   // @returns JSON object holding genre data
 
   getGenre(name: string): Observable<any> {
+    const token = localStorage.getItem('token');
     return this.http
-      .get<IGenre>(apiURL + `movies/genre/${name}`, { headers: this.getHttpHeaders() })
+      .get<IGenre>(apiURL + `movies/genre/${name}`, { headers:new HttpHeaders({
+        Authorization: 'Bearer ' + token,
+      })})
       .pipe(
         map((res: IGenre) => res || {}),
         catchError(this.handleError)
@@ -98,9 +110,12 @@ export class FetchApiDataService {
   // @param name
   // @returns JSON object holding user data
 
-  loadUser(name: string): Observable<any> {
+  loadUser(Username: string): Observable<any> {
+    const token = localStorage.getItem('token');
     return this.http
-      .get<IUser>(apiURL + `users/${name}`, { headers: this.getHttpHeaders() })
+      .get<IUser>(apiURL + `users/${Username}`, { headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token,
+      })})
       .pipe(
         map((res: IUser) => res || {}),
         catchError(this.handleError)
@@ -111,9 +126,12 @@ export class FetchApiDataService {
   // @param name
   // @returns JSON object holding user data
 
-  updateUser(userData: IUser): Observable<any> {
+  updateUser(user: IUser): Observable<any> {
+    const token = localStorage.getItem('token');
     return this.http
-      .put<IUser>(apiURL + `users/${userData.Username}`, { headers: this.getHttpHeaders() })
+      .put<IUser>(apiURL + `users/${user.Username}`, { headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token,
+      })})
       .pipe(
         map((res: IUser) => res || {}),
         catchError(this.handleError)
@@ -124,11 +142,13 @@ export class FetchApiDataService {
   // @param name
   // @returns string message
 
-  deleteUser(name: string): Observable<any> {
+  deleteUser(Username: string): Observable<any> {
+    const token = localStorage.getItem('token');
     return this.http
-      .delete<string>(apiURL + `users/${name}`, { headers: this.getHttpHeaders() })
+      .delete<string>(apiURL + `users/${Username}`, { headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token,
+      })})
       .pipe(
-        map((res: string) => res),
         catchError(this.handleError)
       );
   }
@@ -137,10 +157,12 @@ export class FetchApiDataService {
   // @param name, title
   // @returns array of strings in JSON object holding favorite movies of user
 
-  getFavoriteMovies(name: string, title: string): Observable<any> {
-
+  getFavoriteMovies(Username: string): Observable<any> {
+    const token = localStorage.getItem('token');
     return this.http
-      .get<IUser>(apiURL + `users/${name}`, { headers: this.getHttpHeaders() })
+      .get<IUser>(apiURL + `users/${Username}`, { headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token,
+      })})
       .pipe(
         map((res: IUser) => res.favoriteMovie),
         catchError(this.handleError)
@@ -151,12 +173,13 @@ export class FetchApiDataService {
   // @param name, title
   // @returns JSON object holding movie data
 
-  addFavoriteMovies<IMovie>(name: string, title: string): Observable<any> {
-
+  addFavoriteMovies<IMovie>(Username: string, title: string): Observable<any> {
+    const token = localStorage.getItem('token');
     return this.http
-      .post<IMovie>(apiURL + `users/${name}/movies/${title}`, null, { headers: this.getHttpHeaders() })
+      .post<IMovie>(apiURL + `users/${Username}/movies/${title}`, null, { headers:new HttpHeaders({
+        Authorization: 'Bearer ' + token,
+      })})
       .pipe(
-        map((res: IMovie) => res || {}),
         catchError(this.handleError)
       );
   }
@@ -166,21 +189,26 @@ export class FetchApiDataService {
   // @param name, title
   // @returns JSON object holding movie data
 
-  getHttpHeaders() {
+
+  deleteFavoriteMovies<IMovie>(Username: string, title: string): Observable<any> {
     const token = localStorage.getItem('token');
-    return new HttpHeaders({
-      Authorization: 'Bearer' + token
-    });
-  }
-  deleteFavoriteMovies<IMovie>(name: string, title: string): Observable<any> {
     return this.http
-      .delete<string>(apiURL + `users/${name}/movies/${title}`, {
-        headers: this.getHttpHeaders(),
+      .delete<string>(apiURL + `users/${Username}/movies/${title}`, {
+        headers: new HttpHeaders({
+          Authorization: 'Bearer ' + token,
+        }),
         responseType: 'text' as any,
       })
       .pipe(
         catchError(this.handleError)
       );
+  }
+
+  getHttpHeaders() {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders({
+      Authorization: 'Bearer' + token
+    });
   }
 
   private handleError(error: HttpErrorResponse): any {

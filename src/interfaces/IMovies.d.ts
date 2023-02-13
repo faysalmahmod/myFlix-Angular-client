@@ -11,8 +11,8 @@ interface IMovie {
 interface IDirector {
   "Name": string;
   "Bio": string;
-  "Birth": string;
-  "Death": string;
+  "Birth"?: string;
+  "Death"?: string;
 }
 
 interface IGenre {
