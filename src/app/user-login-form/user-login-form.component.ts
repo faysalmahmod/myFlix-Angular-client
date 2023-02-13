@@ -6,13 +6,13 @@ import { Router } from '@angular/router';
 import { MatCardActions } from "@angular/material/card";
 
 @Component({
-  selector: 'app-user-login-form',
+  selector: 'app-user-login',
   templateUrl: './user-login-form.component.html',
   styleUrls: ['./user-login-form.component.scss']
 })
 export class UserLoginFormComponent implements OnInit {
 
-  @Input() userData = { Name: '', Password: '' };
+  @Input() userData = { Username: '', Password: '' };
 
   constructor(
     private router: Router,
@@ -35,6 +35,7 @@ export class UserLoginFormComponent implements OnInit {
       this.snackBar.open(result.user.Username, 'OK', {
         duration: 2000
       });
+      this.router.navigate(['movies']);
     }, (result) => {
       this.snackBar.open(result, 'Login Error', {
         duration: 2000

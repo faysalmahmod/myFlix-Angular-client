@@ -1,0 +1,22 @@
+@import "../abstract/variables";
+
+.dialog {
+    display: flex;
+    flex-direction: column;
+    box-shadow: none;
+}
+
+.dialog__title {
+    text-align: center;
+    padding: 0 20px 20px;
+}
+
+
+.dialog__content>div {
+    padding: 10px 0;
+}
+
+.content_sub-title {
+    font-weight: bold;
+    color: $text-color-emphasis;
+}

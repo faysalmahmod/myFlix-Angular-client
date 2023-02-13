@@ -6,13 +6,13 @@ import {MatSnackBar} from "@angular/material/snack-bar"; // display notification
 import {MatCardActions} from "@angular/material/card";
 
 @Component({
-  selector: 'app-user-registration-form',
+  selector: 'app-user-registration',
   templateUrl: './user-registration-form.component.html',
   styleUrls: ['./user-registration-form.component.scss'],
 })
 export class UserRegistrationFormComponent implements OnInit {
 
-  @Input() userData = {Name: '', Password: '', Email: '', Birthday: ''};
+  @Input() userData = {Username: '', Password: '', Email: '', Birthday: ''};
 
   constructor(
     public fetchApiData: FetchApiDataService,

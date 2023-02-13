@@ -45,7 +45,7 @@ export class FetchApiDataService {
   // make API call to get all movies
   // @returns array of all movie objects in JSON
 
-  getAllMovies(): Observable<any> {
+  loadAllMovies(): Observable<any> {
     return this.http
       .get<IMovie[]>(apiURL + 'movies', { headers: this.getHttpHeaders() })
       .pipe(
@@ -98,7 +98,7 @@ export class FetchApiDataService {
   // @param name
   // @returns JSON object holding user data
 
-  getUser(name: string): Observable<any> {
+  loadUser(name: string): Observable<any> {
     return this.http
       .get<IUser>(apiURL + `users/${name}`, { headers: this.getHttpHeaders() })
       .pipe(
@@ -154,7 +154,7 @@ export class FetchApiDataService {
   addFavoriteMovies<IMovie>(name: string, title: string): Observable<any> {
 
     return this.http
-      .post<IMovie>(apiURL + `users/${name}/movies/${title}`, { headers: this.getHttpHeaders() })
+      .post<IMovie>(apiURL + `users/${name}/movies/${title}`, null, { headers: this.getHttpHeaders() })
       .pipe(
         map((res: IMovie) => res || {}),
         catchError(this.handleError)
@@ -172,16 +172,18 @@ export class FetchApiDataService {
       Authorization: 'Bearer' + token
     });
   }
-    deleteFavoriteMovies<IMovie>(name: string, title: string): Observable < any > {
-      return this.http
-        .delete<IMovie>(apiURL + `users/${name}/movies/${title}`, { headers: this.getHttpHeaders() })
-        .pipe(
-          map((res: IMovie) => res || {}),
-          catchError(this.handleError)
-        );
-    }
+  deleteFavoriteMovies<IMovie>(name: string, title: string): Observable<any> {
+    return this.http
+      .delete<string>(apiURL + `users/${name}/movies/${title}`, {
+        headers: this.getHttpHeaders(),
+        responseType: 'text' as any,
+      })
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
 
-private handleError(error: HttpErrorResponse): any {
+  private handleError(error: HttpErrorResponse): any {
     if (error.error instanceof ErrorEvent) {
       console.error('Some error occurred:', error.error.message);
     } else {

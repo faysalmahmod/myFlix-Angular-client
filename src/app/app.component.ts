@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {UserService} from "./user.service";
 import { MovieCardComponent } from './movie-card/movie-card.component';
 
 
@@ -9,7 +10,14 @@ import { MovieCardComponent } from './movie-card/movie-card.component';
 })
 export class AppComponent {
   title = 'myFlix';
-  constructor() { }
+  constructor(
+    public userService: UserService,
+  ) {
+  }
+
+  public isLoggedIn(): boolean {
+    return this.userService.isLoggedIn();
+  }
 
   }
 
