@@ -72,10 +72,16 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  deleteUser() {
+  deleteUser() : void {
+    if (confirm('Are you sure you want to permanently delete this account?')) {
+      this.router.navigate(['welcome']).then(() => {
+        this.snackBar.open('Account has successfully been deleted!', 'OK', {
+            duration: 2000,
+          });
+      });
     this.fetchApiDataService.deleteUser(this.user.Username).subscribe((resp: IUser[]) => {
       localStorage.removeItem('user');
       this.router.navigate(['welcome'])
     });
   }
-}
+}}

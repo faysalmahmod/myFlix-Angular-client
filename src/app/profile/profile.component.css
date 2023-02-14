@@ -1,19 +1,12 @@
-@import "../../styles/abstract/variables";
-
 .profile-form {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
 }
 
 mat-card-action:last-child {
     margin: 5px;
-}
-
-.form__title{
-    color: whitesmoke;
 }
 
 .fav-list {
@@ -21,12 +14,13 @@ mat-card-action:last-child {
     flex-direction: column;
 }
 
-
 .header {
     font-weight: bold;
-    color: $text-color-emphasis;
+    color: #673ab7;
 }
 
 .fav-list-item {
     font-size: 14px;
 }
+
+/*# sourceMappingURL=profile.component.css.map */

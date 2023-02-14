@@ -1,6 +1,6 @@
 <mat-card class="form">
     <mat-card-header class="form__header">
-        <mat-card-title class="form__title">Profile information for <b><i>{{ user.Username }}</i></b></mat-card-title>
+        <mat-card-title class="form__title">Profile information for <b>{{ user.Username }}</b></mat-card-title>
     </mat-card-header>
     <mat-card-content>
         <form>
@@ -21,10 +21,10 @@
             </mat-form-field>
         </form>
     </mat-card-content>
-    <button mat-button color="primary" (click)="updateUser()">
+    <button mat-button color="accent" (click)="updateUser()">
         Update Info
     </button>
-    <button mat-button color="primary" (click)="deleteUser()">
+    <button mat-button color="accent" (click)="deleteUser()">
         Delete Profile
     </button>
 </mat-card>

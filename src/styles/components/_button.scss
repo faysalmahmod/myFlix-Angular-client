@@ -7,13 +7,13 @@
 .button-wrapper-justify {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-evenly !important;
 }
 
 .close-button {
     background-color: $background-color-light;
     border: none;
-    color: $button-color;
+    color: $emphasis;
     font-weight: bold;
     cursor: pointer;
 }
@@ -31,5 +31,13 @@
 }
 
 .favorite-button {
-    color: $button-color;
+    color: $emphasis;
 }
+
+.button{
+    background-color: $background-color-emphasis;
+    border: none;
+    color: $white;
+    font-weight: bold;
+    cursor: pointer;
+  }

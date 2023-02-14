@@ -1,27 +1,32 @@
-.mat-toolbar{
-  background-color: #1F2833;
+@import "../../styles/abstract/variables";
+
+.mat-toolbar {
+  background-color: $background-color-dark;
   color: white;
-  box-shadow: 0 0 10px white;
+  box-shadow: 0 4px 8px 0 $off-white, 0 6px 20px 0 $off-white;
   margin-bottom: 10px;
 
 }
-.mat-button{
+
+.mat-button {
   color: white;
 }
 
-.mat-button:hover, .mat-button:focus{
-  color: red;
-  background: white;
+.mat-button:hover,
+.mat-button:focus {
+  color: $emphasis;
+  background: $background-color-light;
   transition: 0.5s;
   border-radius: 5px;
 }
 
-.spacer{
+.spacer {
   flex: 1 1 auto;
 
 }
 
-.bear-icon--small{
+.bear-icon--small {
   width: 20px;
   height: 20px;
+  align-items: center;
 }

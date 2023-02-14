@@ -1,28 +1,32 @@
 .card-wrapper {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-    flex-flow: row wrap;
-    -webkit-box-pack: start;
-    -ms-flex-pack: start;
-    justify-content: center;
-  }
-  
-  .movie-card {
-    -webkit-box-flex: 1;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-width: 300px;
-    width: 300px;
-    margin: 10px;
-    padding: 20px 10px;
-  }
-  .movie-card__image {
-    max-height: 200px;
-    width: auto;
-  }
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  flex-flow: row wrap;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: center;
+}
+
+.movie-card {
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 300px;
+  width: 300px;
+  margin: 10px;
+  padding: 30px 20px;
+}
+
+.movie-card__image {
+  max-height: 200px;
+  width: auto;
+  border-radius: 5px;
+}
+
+/*# sourceMappingURL=movie-card.component.css.map */
