@@ -4,15 +4,13 @@ interface IMovie {
   "Description": string;
   "Genre": IGenre;
   "Director": IDirector;
-  "ImagePath": string;
+  "ImageURL": string;
   "Featured": true;
 }
 
 interface IDirector {
   "Name": string;
   "Bio": string;
-  "Birth"?: string;
-  "Death"?: string;
 }
 
 interface IGenre {

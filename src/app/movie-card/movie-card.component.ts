@@ -58,13 +58,11 @@ export class MovieCardComponent
   }
 
   // this functions opens the dialog when Director button is clicked
-  openDirectorDialog(Name: string, Bio: string, Birth: string, Death?: string): void {
+  openDirectorDialog(Name: string, Bio: string): void {
     this.dialog.open(DirectorDialogComponent, {
       data: {
         Name: Name,
-        Bio: Bio,
-        Birth: Birth,
-        Death: Death,
+        Bio: Bio
       },
       width: '500px'
     });

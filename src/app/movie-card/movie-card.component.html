@@ -15,16 +15,16 @@
       </mat-card-subtitle>
 
     </mat-card-header>
-    <img class="movie-card__image" src={{movie.ImagePath}} alt={{movie.Title}} />
+    <img class="movie-card__image" src="{{movie.ImageURL}}" alt={{movie.Title}} />
     <mat-card-actions class="button-wrapper-justify">
       <button class="link-button" mat-button (click)="openGenreDialog(movie.Genre.Name, movie.Genre.Description)">
         Genre
       </button>
-      <!-- <button class="link-button" mat-button
-        (click)="openDirectorDialog(movie.Director.Name, movie.Director.Bio, movie.Director.Birth, movie.Director.Death)">
+      <button class="link-button" mat-button
+        (click)="openDirectorDialog(movie.Director.Name, movie.Director.Bio)">
 
         Director
-      </button> -->
+      </button>
       <button class="link-button" mat-button (click)="openMovieDetailDialog(movie.Title, movie.Description)">
         Synopsis
       </button>

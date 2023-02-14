@@ -32,16 +32,12 @@ export class ProfileComponent implements OnInit {
 
   loadUser(): void {
     const userName = this.userService.getName();
-
     if (!userName) {
       throw new Error('Unknown User in ProfileComponent');
     }
     this.fetchApiDataService.loadUser(userName)
       .subscribe((response: IUser) => {
         const birthdayDate = new Date(Date.parse(response.Birthday));
-
-        // Kudos go to https://stackoverflow.com/questions/3605214/javascript-add-leading-zeroes-to-date
-        // Using "ko-KR" because it has the correct order yyyy-mm-dd I needed for Bootstrap Datepicker..
         const birthdayString = birthdayDate.toLocaleDateString("ko-KR", {
           year: "numeric",
           month: "2-digit",
