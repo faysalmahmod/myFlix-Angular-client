@@ -22,7 +22,10 @@ export class MovieCardComponent
     this.getMovies();
     this.getUser();
   }
-
+  /**
+   * gets movies from API call and returns array if movies
+   * @returns array of movie objects
+   */
   getMovies(): void {
     this.fetchApiDataService.loadAllMovies().subscribe((resp: IMovie[]) => {
       this.movies = resp;
@@ -30,7 +33,9 @@ export class MovieCardComponent
       return this.movies
     });
   }
-
+  /**
+   * gets user data from API call and an array of favorite movies
+   */
   getUser(): void {
     const userName = this.userService.getName();
 
@@ -46,7 +51,11 @@ export class MovieCardComponent
       })
   }
 
-  // this functions opens the dialog when Genre button is clicked
+  /**
+   *   this functions opens the genre dialog when Genre button is clicked
+   *   @param name
+   *   @param description
+   */
   openGenreDialog(name: string, description: string): void {
     this.dialog.open(GenreDialogComponent, {
       data: {
@@ -57,7 +66,13 @@ export class MovieCardComponent
     });
   }
 
-  // this functions opens the dialog when Director button is clicked
+   /**
+   * this functions opens the director dialog when Director button is clicked
+   * @param Name
+   * @param Bio
+   * @param Birth
+   * @param Death
+   */
   openDirectorDialog(Name: string, Bio: string): void {
     this.dialog.open(DirectorDialogComponent, {
       data: {
@@ -68,7 +83,11 @@ export class MovieCardComponent
     });
   }
 
-  // this functions opens the dialog when Synopsys button is clicked
+  /**
+   * this functions opens the dialog when Synopsys button is clicked
+   * @param Title
+   * @param Description
+   */
   openMovieDetailDialog(Title: string, Description: string): void {
     this.dialog.open(MovieDetailDialogComponent, {
       data: {
@@ -87,7 +106,11 @@ export class MovieCardComponent
     return this.favoriteMovie.includes(_id);
   }
 
-  // deselects movie as favorite movie
+  /**
+   * deselects movie as favorite movie
+   * @param name (name of user)
+   * @param title (title of movie)
+   */
   deselectAsFavoriteMovie(Username: string, title: string): void {
     this.fetchApiDataService.deleteFavoriteMovies(
       Username,
@@ -97,7 +120,12 @@ export class MovieCardComponent
     })
   }
 
-  // deselects movie as favorite movie
+  /**
+   * selects movie as favorite movie
+   * @param name (name of user)
+   * @param title (title of movie)
+   */
+  
   selectAsFavoriteMovie(Username: string, title: string): void {
 
     this.fetchApiDataService.addFavoriteMovies(Username, title).subscribe((result) => {

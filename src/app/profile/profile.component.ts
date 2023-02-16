@@ -29,7 +29,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.loadUser();
   }
-
+  /**
+   * fetches user object data with user's current data (Name, Password, Birthday, Favorite Movies)
+   */
   loadUser(): void {
     const userName = this.userService.getName();
     if (!userName) {
@@ -53,6 +55,9 @@ export class ProfileComponent implements OnInit {
         this.loadAllMovies();
       });
   }
+  /**
+ * loads all movies and checks which movies are the user's favorite movies
+ */
   loadAllMovies(): void {
     this.fetchApiDataService.loadAllMovies()
       .subscribe((resp: IMovie[]) => {
@@ -61,7 +66,10 @@ export class ProfileComponent implements OnInit {
         this.favoriteMovie = this.movies.filter(movie => this.user.favoriteMovie?.includes(movie._id));
       });
   }
-
+  /**
+   * opens snackbar to inform about successful update of user information
+   * adds user name to local storage and/or overwrites previously stored name
+   */
 
   updateUser() {
     this.fetchApiDataService.updateUser(
@@ -71,17 +79,20 @@ export class ProfileComponent implements OnInit {
       localStorage.setItem('user', resp.Username);
     });
   }
-
-  deleteUser() : void {
+  /**
+   * deletes the user data set from local storage, logs out and redirects the user to the welcome page
+   */
+  deleteUser(): void {
     if (confirm('Are you sure you want to permanently delete this account?')) {
       this.router.navigate(['welcome']).then(() => {
         this.snackBar.open('Account has successfully been deleted!', 'OK', {
-            duration: 2000,
-          });
+          duration: 2000,
+        });
       });
-    this.fetchApiDataService.deleteUser(this.user.Username).subscribe((resp: IUser[]) => {
-      localStorage.removeItem('user');
-      this.router.navigate(['welcome'])
-    });
+      this.fetchApiDataService.deleteUser(this.user.Username).subscribe((resp: IUser[]) => {
+        localStorage.removeItem('user');
+        this.router.navigate(['welcome'])
+      });
+    }
   }
-}}
+}
