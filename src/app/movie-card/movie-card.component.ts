@@ -5,6 +5,7 @@ import { GenreDialogComponent } from '../genre/genre-dialog.component';
 import { DirectorDialogComponent } from '../director/director-dialog.component';
 import { MovieDetailDialogComponent } from '../movie-detail/movie-detail-dialog.component';
 import { UserService } from "../user.service";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-movie-card',
@@ -14,18 +15,30 @@ import { UserService } from "../user.service";
 export class MovieCardComponent
   implements OnInit {
   movies: IMovie[] = [];
-  favoriteMovie: string[] = [];
-  user: IUser = { Username: '', Email: '', Birthday: '', Password: '', favoriteMovie: [] };
-  constructor(public fetchApiDataService: FetchApiDataService, public userService: UserService, public dialog: MatDialog,) { }
+  favouriteMovie: string[] = [];
+  user: IUser = { Username: '', Email: '', Birthday: '', Password: '', favouriteMovie: [] };
+  constructor(public fetchApiDataService: FetchApiDataService, public userService: UserService, public dialog: MatDialog, public snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.getMovies();
     this.getUser();
+    this.getFavMovies();
   }
   /**
    * gets movies from API call and returns array if movies
    * @returns array of movie objects
    */
+
+  getFavMovies(): void {
+    const userName = this.userService.getName();
+    if (!userName) {
+      throw new Error('Unknown User in MovieCardComponent');
+    }
+    this.fetchApiDataService.loadUser(userName).subscribe((res: any)=>{
+      this.favouriteMovie=res.FavoriteMovies;
+      return this.favouriteMovie;
+    })
+  }
   getMovies(): void {
     this.fetchApiDataService.loadAllMovies().subscribe((resp: IMovie[]) => {
       this.movies = resp;
@@ -46,7 +59,7 @@ export class MovieCardComponent
     this.fetchApiDataService
       .loadUser(userName)
       .subscribe((response: IUser) => {
-        this.favoriteMovie = response.favoriteMovie || [];
+        this.favouriteMovie = response.favouriteMovie || [];
         this.user = response;
       })
   }
@@ -66,13 +79,13 @@ export class MovieCardComponent
     });
   }
 
-   /**
-   * this functions opens the director dialog when Director button is clicked
-   * @param Name
-   * @param Bio
-   * @param Birth
-   * @param Death
-   */
+  /**
+  * this functions opens the director dialog when Director button is clicked
+  * @param Name
+  * @param Bio
+  * @param Birth
+  * @param Death
+  */
   openDirectorDialog(Name: string, Bio: string): void {
     this.dialog.open(DirectorDialogComponent, {
       data: {
@@ -102,8 +115,8 @@ export class MovieCardComponent
  * @param _id The id of the movie which should be checked for being a Favorite
  * @returns boolean
  */
-  isFav(_id: string): boolean {
-    return this.favoriteMovie.includes(_id);
+  isFav(_id: any): boolean {
+    return this.favouriteMovie.includes(_id);
   }
 
   /**
@@ -111,25 +124,64 @@ export class MovieCardComponent
    * @param name (name of user)
    * @param title (title of movie)
    */
-  deselectAsFavoriteMovie(Username: string, title: string): void {
+  deselectAsFavoriteMovie(Username: string, _id: any): void {
     this.fetchApiDataService.deleteFavoriteMovies(
       Username,
-      title
+      _id
     ).subscribe((result) => {
+      this.snackBar.open('Movie has been removed from your favorites!', 'OK', {
+        duration: 2000,
+      });
       this.ngOnInit();
-    })
+    });
   }
-
   /**
    * selects movie as favorite movie
    * @param name (name of user)
    * @param title (title of movie)
    */
-  
-  selectAsFavoriteMovie(Username: string, title: string): void {
 
-    this.fetchApiDataService.addFavoriteMovies(Username, title).subscribe((result) => {
+
+  selectAsFavoriteMovie(Username: string, _id: string): void {
+    this.fetchApiDataService.addFavoriteMovies(Username, _id).subscribe((result) => {
+      this.snackBar.open('Movie has been added to your favorites!', 'OK', {
+        duration: 2000,
+      });
       this.getUser()
-    })
+    });
   }
+
+
+  onToggleFavMovie(Username: string,_id: string): void {
+    //console.log(this.favoriteMovies);
+    if(!this.favouriteMovie.includes(_id)) {
+      this.fetchApiDataService.addFavoriteMovies(Username, _id).subscribe((res)=>{
+        this.favouriteMovie=res.favouriteMovie;
+        this.snackBar.open('Movie added to favourites.', 'OK', {
+          duration: 3000
+       })
+      }, (res) => {
+        //Error response
+        //console.log('loginUser() response2:', res);
+        this.snackBar.open(res.message, 'OK', {
+          duration: 4000
+        });
+      })
+    } else {
+      this.fetchApiDataService.deleteFavoriteMovies(Username, _id).subscribe((res)=>{
+        this.favouriteMovie=res.favoriteMovie;
+        this.snackBar.open('Movie removed from favourites.', 'OK', {
+          duration: 3000
+       })
+      }, (res) => {
+        //Error response
+        //console.log('loginUser() response2:', res);
+        this.snackBar.open(res.message, 'OK', {
+          duration: 4000
+        });
+      })
+    }
+  }
+
+
 }

@@ -12,21 +12,42 @@ mat-card-action:last-child {
     margin: 5px;
 }
 
+.buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-bottom:0.5px dotted white;
+}
+
+.fav-list{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    
+  }
+
+ button{
+    border: 1px solid grey;
+    border-bottom-color:rgb(247, 83, 7);
+    margin: 5px;
+ } 
+
+.favmovie{
+    margin-top: 5px;
+    color: white;
+}  
+
 .form__title{
     color: whitesmoke;
 }
 
-.fav-list {
-    display: flex;
-    flex-direction: column;
+.fav-list-item {
+  font-size: 14px;
 }
 
 
 .header {
     font-weight: bold;
     color: $text-color-emphasis;
-}
-
-.fav-list-item {
-    font-size: 14px;
 }

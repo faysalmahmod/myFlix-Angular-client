@@ -1,13 +1,16 @@
 <div class="card-wrapper">
   <mat-card *ngFor="let movie of movies; let i=index;" class="movie-card">
     <mat-card-header>
-      <mat-card-title>{{movie.Title}}</mat-card-title>
+      <mat-card-title class="title">{{movie.Title}}</mat-card-title>
 
-      <button mat-icon-button class="favorite-button" aria-label="Example icon button with a heart icon">
-        <mat-icon *ngIf="user.Username && isFav(movie._id)"
-          (click)="deselectAsFavoriteMovie(user.Username, movie.Title)">favorite</mat-icon>
-        <mat-icon *ngIf="user.Username && !isFav(movie._id)"
-          (click)="selectAsFavoriteMovie(user.Username, movie.Title)">favorite_border</mat-icon>
+      <button mat-icon-button class="favorite-button" aria-label="Example icon button with a heart icon"
+        *ngIf="!isFav(movie._id)" (click)="selectAsFavoriteMovie(user.Username,movie._id)">
+        <mat-icon>favorite_border</mat-icon>
+      </button>
+
+      <button mat-icon-button class="favorite-button" aria-label="Example icon button with a heart icon"
+        *ngIf="isFav(movie._id)" (click)="deselectAsFavoriteMovie(user.Username,movie._id)">
+        <mat-icon>favorite</mat-icon>
       </button>
 
       <mat-card-subtitle>
@@ -20,8 +23,7 @@
       <button class="link-button" mat-button (click)="openGenreDialog(movie.Genre.Name, movie.Genre.Description)">
         Genre
       </button>
-      <button class="link-button" mat-button
-        (click)="openDirectorDialog(movie.Director.Name, movie.Director.Bio)">
+      <button class="link-button" mat-button (click)="openDirectorDialog(movie.Director.Name, movie.Director.Bio)">
 
         Director
       </button>

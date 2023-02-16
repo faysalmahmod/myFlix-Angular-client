@@ -14,7 +14,7 @@ import { UserService } from "../user.service";
 export class ProfileComponent implements OnInit {
 
   @Input() user: IUser = { Username: '', Password: '', Email: '', Birthday: '' };
-  favoriteMovie: IMovie[] = [];
+  favouriteMovie: IMovie[] = [];
   movies: IMovie[] = [];
 
 
@@ -62,8 +62,7 @@ export class ProfileComponent implements OnInit {
     this.fetchApiDataService.loadAllMovies()
       .subscribe((resp: IMovie[]) => {
         this.movies = resp;
-
-        this.favoriteMovie = this.movies.filter(movie => this.user.favoriteMovie?.includes(movie._id));
+        this.favouriteMovie = this.movies.filter(movie => this.user.favouriteMovie?.includes(movie._id));
       });
   }
   /**
@@ -74,11 +73,18 @@ export class ProfileComponent implements OnInit {
   updateUser() {
     this.fetchApiDataService.updateUser(
       this.user
-    ).subscribe((resp: IUser) => {
-      this.snackBar.open('User updated.', undefined, { duration: 3000 })
+    ).subscribe((resp) => {
+      this.snackBar.open('User updated.', undefined, { duration: 3000 });
       localStorage.setItem('user', resp.Username);
+      window.location.reload();
+    }, (response) => {
+      //Error response
+      //console.log('onUserUpdate() response2:', response);
+      this.snackBar.open(response.errors[0].msg, 'OK', {
+        duration: 6000
+      });
     });
-  }
+  } 
   /**
    * deletes the user data set from local storage, logs out and redirects the user to the welcome page
    */
@@ -89,7 +95,7 @@ export class ProfileComponent implements OnInit {
           duration: 2000,
         });
       });
-      this.fetchApiDataService.deleteUser(this.user.Username).subscribe((resp: IUser[]) => {
+      this.fetchApiDataService.deleteUser(this.user.Username).subscribe((resp: string) => {
         localStorage.removeItem('user');
         this.router.navigate(['welcome'])
       });

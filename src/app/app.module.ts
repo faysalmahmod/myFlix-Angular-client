@@ -27,7 +27,7 @@ import { GenreDialogComponent } from './genre/genre-dialog.component';
 import { DirectorDialogComponent } from './director/director-dialog.component';
 import { MovieDetailDialogComponent } from './movie-detail/movie-detail-dialog.component';
 import { NavbarComponent } from './navbar/navbar.component';
-
+import {MatListModule} from "@angular/material/list";
 
 @NgModule({
   declarations: [
@@ -57,7 +57,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     MatFormFieldModule,
     MatSnackBarModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatListModule
   ],
   providers: [
     { provide: MatCardActions},
