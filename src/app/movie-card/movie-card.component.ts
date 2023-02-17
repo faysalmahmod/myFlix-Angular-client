@@ -21,24 +21,15 @@ export class MovieCardComponent
 
   ngOnInit(): void {
     this.getMovies();
-    this.getUser();
-    this.getFavMovies();
+    this.getUser();   
   }
+
   /**
    * gets movies from API call and returns array if movies
    * @returns array of movie objects
    */
 
-  getFavMovies(): void {
-    const userName = this.userService.getName();
-    if (!userName) {
-      throw new Error('Unknown User in MovieCardComponent');
-    }
-    this.fetchApiDataService.loadUser(userName).subscribe((res: any)=>{
-      this.favouriteMovie=res.FavoriteMovies;
-      return this.favouriteMovie;
-    })
-  }
+
   getMovies(): void {
     this.fetchApiDataService.loadAllMovies().subscribe((resp: IMovie[]) => {
       this.movies = resp;
@@ -147,7 +138,7 @@ export class MovieCardComponent
       this.snackBar.open('Movie has been added to your favorites!', 'OK', {
         duration: 2000,
       });
-      this.getUser()
+      this.ngOnInit();
     });
   }
 

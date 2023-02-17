@@ -1,6 +1,7 @@
+<div class="form">
 <mat-card class="form mat-elevation-z0">
     <mat-card-header class="form__header">
-      <mat-card-title class="form__title">Sign Up!</mat-card-title>
+      <mat-card-title class="form__title form-input">Sign Up!</mat-card-title>
     </mat-card-header>
     <mat-card-content>
       <form>
@@ -11,6 +12,7 @@
             placeholder="Username"
             type="text"
             name="Name"
+            class=""
             [required]="true"
           >
         </mat-form-field>
@@ -50,8 +52,10 @@
         mat-raised-button
         (click)="registerUser()"
         color="primary"
+        class="btn"
       >
         Sign Up
       </button>
     </mat-card-actions>
   </mat-card>
+</div>
